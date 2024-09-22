@@ -1,20 +1,25 @@
+package com.example.composegrocerylist.ui.components
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import com.example.composegrocerylist.Data.GroceryItem
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.composegrocerylist.ViewModel.GroceryViewModel
+import com.example.composegrocerylist.ui.components.GroceryListItem
+import androidx.compose.foundation.lazy.items
 
 @Composable
-fun GroceryList(
-    groceryList: List<GroceryItem>,
-    onItemCheckedChange: (GroceryItem) -> Unit,
-    onItemDelete: (GroceryItem) -> Unit
-) {
+fun GroceryList(groceryViewModel: GroceryViewModel) {
+    val groceryItems by groceryViewModel.groceryItems.collectAsState()
+
     LazyColumn {
-        items(groceryList.size) { index ->
-            val item = groceryList[index]
-            GroceryItemRow(
+        items(groceryItems) { item ->
+            GroceryListItem(
                 item = item,
-                onCheckedChange = onItemCheckedChange,
-                onDelete = onItemDelete
+                onDelete = { groceryViewModel.deleteGroceryItem(item.id) },
+                onCheck = { checked ->
+                    groceryViewModel.setCheckedStatus(item.id.toInt(), checked) // Update the item
+                }
             )
         }
     }

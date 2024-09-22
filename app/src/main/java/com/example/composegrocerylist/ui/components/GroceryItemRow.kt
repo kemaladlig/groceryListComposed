@@ -1,3 +1,5 @@
+package com.example.composegrocerylist.ui.components
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -6,41 +8,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composegrocerylist.Data.GroceryItem
 
+
 @Composable
-fun GroceryItemRow(item: GroceryItem, onCheckedChange: (GroceryItem) -> Unit, onDelete: (GroceryItem) -> Unit) {
+fun GroceryListItem(item: GroceryItem, onDelete: () -> Unit, onCheck: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        // Row for the checkbox and text
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        // Checkbox to toggle the checked state
+        Checkbox(
+            checked = item.checked,
+            onCheckedChange = { checked ->
+                item.checked = checked
+                onCheck(checked) // Notify the change
+            }
+        )
+
+        // Overline text if checked
+        Text(
+            text = item.name,
+            textDecoration = if (item.checked) TextDecoration.LineThrough else null,
             modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                text = item.name,
-                style = if (item.isChecked) {
-                    MaterialTheme.typography.bodyMedium.copy(textDecoration = TextDecoration.LineThrough)
-                } else {
-                    MaterialTheme.typography.bodyMedium
-                }
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Checkbox(
-                checked = item.isChecked,
-                onCheckedChange = { onCheckedChange(item) }
-            )
-        }
-        // Delete Button
-        IconButton(onClick = { onDelete(item) }) {
-            Icon(imageVector = Icons.Filled.Delete, contentDescription = "Delete")
+        )
+
+        IconButton(onClick = onDelete) {
+            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Item")
         }
     }
 }

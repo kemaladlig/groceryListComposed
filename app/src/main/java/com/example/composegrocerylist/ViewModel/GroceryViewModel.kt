@@ -1,34 +1,47 @@
 package com.example.composegrocerylist.ViewModel
 
 import androidx.lifecycle.ViewModel
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.viewModelScope
 import com.example.composegrocerylist.Data.GroceryItem
+import com.example.composegrocerylist.Data.GroceryRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class GroceryViewModel : ViewModel() {
-    // Mutable list to hold grocery items
-    private val _groceryList: SnapshotStateList<GroceryItem> = mutableStateListOf()
+class GroceryViewModel(private val repository: GroceryRepository) : ViewModel() {
 
-    // Public read-only access to the list
-    val groceryList: List<GroceryItem> get() = _groceryList
+    private val _groceryItems = MutableStateFlow<List<GroceryItem>>(emptyList())
+    val groceryItems: StateFlow<List<GroceryItem>> = _groceryItems.asStateFlow()
 
-    // Function to add a new item to the list
-    fun addItem(itemName: String) {
-        if (itemName.isNotEmpty()) {
-            _groceryList.add(GroceryItem(itemName))
+    init {
+        fetchItems() // Load items on initialization
+    }
+
+    private fun fetchItems() {
+        viewModelScope.launch {
+            _groceryItems.value = repository.getAllGroceryItems()
         }
     }
 
-    // Function to toggle the checked state of an item
-    fun toggleItemChecked(item: GroceryItem) {
-        val index = _groceryList.indexOf(item)
-        if (index != -1) {
-            _groceryList[index] = item.copy(isChecked = !item.isChecked)
+    fun addGroceryItem(name: String) {
+        val newItem = GroceryItem(name = name) // Create GroceryItem instance
+        viewModelScope.launch {
+            repository.addGroceryItem(newItem)
+            fetchItems() // Refresh the list after adding
         }
     }
 
-    // Function to remove an item from the list
-    fun removeItem(item: GroceryItem) {
-        _groceryList.remove(item)
+    fun deleteGroceryItem(itemId: Long) {
+        viewModelScope.launch {
+            repository.deleteGroceryItem(itemId)
+            fetchItems() // Refresh the list after deletion
+        }
+    }
+
+    fun setCheckedStatus(itemId: Int, isChecked: Boolean) {
+        viewModelScope.launch {
+            repository.updateCheckedStatus(itemId, isChecked)
+        }
     }
 }
