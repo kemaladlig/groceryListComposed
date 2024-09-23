@@ -16,6 +16,6 @@ interface GroceryItemDao {
     @Query("DELETE FROM grocery_items WHERE id = :itemId")
     suspend fun deleteItem(itemId: Long)
 
-    @Query("UPDATE grocery_items SET checked = :isChecked WHERE id = :itemId")
-    suspend fun updateCheckedStatus(itemId: Int, isChecked: Boolean)
+    /*@Query("UPDATE grocery_items SET checked = :isChecked WHERE id = :itemId")
+    fun updateCheckedStatus(itemId: ULong, isChecked: Boolean)*/
 }

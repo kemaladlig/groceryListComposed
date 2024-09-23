@@ -73,6 +73,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.sqlite.bundled)
+    kapt(libs.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

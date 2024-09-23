@@ -39,9 +39,9 @@ class GroceryViewModel(private val repository: GroceryRepository) : ViewModel() 
         }
     }
 
-    fun setCheckedStatus(itemId: Int, isChecked: Boolean) {
+    /*fun setCheckedStatus(itemId: ULong, isChecked: Boolean) {
         viewModelScope.launch {
             repository.updateCheckedStatus(itemId, isChecked)
         }
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ class GroceryRepository(private val dao: GroceryItemDao) {
         dao.deleteItem(itemId)
     }
 
-    suspend fun updateCheckedStatus(itemId: Int, isChecked: Boolean){
-        dao.updateCheckedStatus(itemId,isChecked)
-    }
+    /*suspend fun updateCheckedStatus(itemId: ULong, isChecked: Boolean) {
+        dao.updateCheckedStatus(itemId, isChecked)
+    }*/
 }
