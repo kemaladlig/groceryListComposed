@@ -28,21 +28,21 @@ class GroceryViewModel(private val repository: GroceryRepository) : ViewModel() 
         val newItem = GroceryItem(name = name) // Create GroceryItem instance
         viewModelScope.launch {
             repository.addGroceryItem(newItem)
-            fetchItems() // Refresh the list after adding
+            fetchItems()
         }
     }
 
     fun deleteGroceryItem(itemId: Long) {
         viewModelScope.launch {
             repository.deleteGroceryItem(itemId)
-            fetchItems() // Refresh the list after deletion
+            fetchItems()
         }
     }
 
     fun updateGroceryItem(item: GroceryItem) {
         viewModelScope.launch {
-            repository.updateGroceryItem(item) // Veritabanında güncelleme yap
-            fetchItems() // Güncel listeyi yenile
+            repository.updateGroceryItem(item)
+            fetchItems()
         }
     }
 

@@ -21,12 +21,12 @@ fun GroceryListItem(item: GroceryItem, onDelete: () -> Unit, onCheck: (Boolean) 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Checkbox to toggle the checked state
+
         Checkbox(
             checked = item.checked,
             onCheckedChange = { checked ->
-                val updatedItem = item.copy(checked = checked) // Yeni bir item oluştur
-                onCheck(checked) // Notify the change
+                val updatedItem = item.copy(checked = checked)
+                onCheck(checked)
             }
         )
 
