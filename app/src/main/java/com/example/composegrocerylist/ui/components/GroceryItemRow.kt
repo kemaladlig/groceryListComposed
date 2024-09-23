@@ -25,7 +25,7 @@ fun GroceryListItem(item: GroceryItem, onDelete: () -> Unit, onCheck: (Boolean) 
         Checkbox(
             checked = item.checked,
             onCheckedChange = { checked ->
-                item.checked = checked
+                val updatedItem = item.copy(checked = checked) // Yeni bir item oluştur
                 onCheck(checked) // Notify the change
             }
         )

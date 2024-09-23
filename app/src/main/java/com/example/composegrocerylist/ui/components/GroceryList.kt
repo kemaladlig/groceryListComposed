@@ -16,8 +16,9 @@ fun GroceryList(groceryViewModel: GroceryViewModel) {
             GroceryListItem(
                 item = item,
                 onDelete = { groceryViewModel.deleteGroceryItem(item.id) },
-                onCheck = { checked -> // TODO:
-                    //groceryViewModel.setCheckedStatus(item.id.toULong(), checked) // Update the item
+                onCheck = { checked ->
+                    val updatedItem = item.copy(checked = checked) // Yeni bir item oluştur
+                    groceryViewModel.updateGroceryItem(updatedItem) // Güncelle
                 }
             )
         }

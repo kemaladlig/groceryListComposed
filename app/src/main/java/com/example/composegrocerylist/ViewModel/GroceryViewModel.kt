@@ -39,9 +39,12 @@ class GroceryViewModel(private val repository: GroceryRepository) : ViewModel() 
         }
     }
 
-    /*fun setCheckedStatus(itemId: ULong, isChecked: Boolean) {
+    fun updateGroceryItem(item: GroceryItem) {
         viewModelScope.launch {
-            repository.updateCheckedStatus(itemId, isChecked)
+            repository.updateGroceryItem(item) // Veritabanında güncelleme yap
+            fetchItems() // Güncel listeyi yenile
         }
-    }*/
+    }
+
+
 }

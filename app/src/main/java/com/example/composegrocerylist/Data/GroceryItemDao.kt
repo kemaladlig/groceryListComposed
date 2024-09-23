@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface GroceryItemDao {
@@ -16,6 +17,7 @@ interface GroceryItemDao {
     @Query("DELETE FROM grocery_items WHERE id = :itemId")
     suspend fun deleteItem(itemId: Long)
 
-    /*@Query("UPDATE grocery_items SET checked = :isChecked WHERE id = :itemId")
-    fun updateCheckedStatus(itemId: ULong, isChecked: Boolean)*/
+    @Update
+    suspend fun updateItem(item: GroceryItem)
+
 }
