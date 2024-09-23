@@ -5,7 +5,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,6 +25,7 @@ import com.example.composegrocerylist.ViewModel.GroceryViewModel
 
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,7 +43,23 @@ class MainActivity : ComponentActivity() {
             })[GroceryViewModel::class.java]
 
             MaterialTheme {
-                GroceryListScreen(groceryViewModel)
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Grocery List") },
+                            actions = {
+                                IconButton(onClick = { /*  */ }) {
+                                    Icon(Icons.Default.Edit, contentDescription = "Liste")
+                                }
+                            }
+                        )
+                    }
+                ) { paddingValues ->
+                    GroceryListScreen(
+                        groceryViewModel = groceryViewModel,
+                        modifier = Modifier.padding(paddingValues)
+                    )
+                }
             }
         }
     }
