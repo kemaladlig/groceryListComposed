@@ -21,6 +21,11 @@ fun GroceryListItem(item: GroceryItem, onDelete: () -> Unit, onCheck: (Boolean) 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Overline text if checked
+        Text(
+            text = item.name,
+            textDecoration = if (item.checked) TextDecoration.LineThrough else null,
+        )
 
         Checkbox(
             checked = item.checked,
@@ -30,12 +35,7 @@ fun GroceryListItem(item: GroceryItem, onDelete: () -> Unit, onCheck: (Boolean) 
             }
         )
 
-        // Overline text if checked
-        Text(
-            text = item.name,
-            textDecoration = if (item.checked) TextDecoration.LineThrough else null,
-            modifier = Modifier.weight(1f)
-        )
+        Spacer(modifier = Modifier.weight(1f))
 
         IconButton(onClick = onDelete) {
             Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Item")
